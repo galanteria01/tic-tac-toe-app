@@ -1,5 +1,6 @@
 package com.shanu.tictactoe
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     var activePlayer = 1
     var playerOne = ArrayList<Int>()
     var playerTwo = ArrayList<Int>()
+    @SuppressLint("ResourceAsColor")
     fun playGame(cellId: Int, selectedbutton: Button) {
 
         if (activePlayer == 1) {
@@ -117,10 +119,6 @@ class MainActivity : AppCompatActivity() {
         }else if(winner ==2){
             Toast.makeText(this,"Player two wins ",Toast.LENGTH_LONG).show()
 
-        }else{
-            Toast.makeText(this,"Game is tie ",Toast.LENGTH_LONG).show()
-
         }
-
     }
 }
