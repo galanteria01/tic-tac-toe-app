@@ -3,6 +3,7 @@ package com.shanu.tictactoe
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonClick(view: View) {
-        var selectedButton = view as Button
+        val selectedButton = view as Button
         Log.d("buclick:", selectedButton.id.toString())
         var cellId = 0
         when (selectedButton.id) {
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         // row 1
         if (playerOne.contains(1) && playerOne.contains(2) && playerOne.contains(3)) {
             winner = 1
+
         }
         else if (playerTwo.contains(1) && playerTwo.contains(2) && playerTwo.contains(3)) {
             winner = 2
@@ -119,10 +121,17 @@ class MainActivity : AppCompatActivity() {
         // Final check
         if(winner == 1){
             Toast.makeText(this,"Player one wins ",Toast.LENGTH_LONG).show()
+            var intNo = playerWin.text.toString().toInt()
+            intNo++
+            val str = intNo.toString()
+            playerWin.text = SpannableStringBuilder(str)
+            resetGame()
 
 
         }else if(winner ==2){
             Toast.makeText(this,"Player two wins ",Toast.LENGTH_LONG).show()
+            // computerWin.text
+            resetGame()
 
         }
     }
@@ -135,10 +144,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        var r = Random()
-        var randIndex = r.nextInt(emptyCell.size - 0) + 0
-        var cellId = emptyCell[randIndex]
-        var selectedbutton:Button?
+        val r = Random()
+        val randIndex = r.nextInt(emptyCell.size - 0) + 0
+        val cellId = emptyCell[randIndex]
+        val selectedbutton:Button?
         selectedbutton = when(cellId){
             1 -> button1
             2 -> button2
@@ -153,6 +162,11 @@ class MainActivity : AppCompatActivity() {
         }
         playGame(cellId,selectedbutton)
 
+
+    }
+    fun resetGame(){
+        playerOne.clear()
+        playerTwo.clear()
 
     }
 }
