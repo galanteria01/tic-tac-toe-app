@@ -121,8 +121,9 @@ class MainActivity : AppCompatActivity() {
         // Final check
         if(winner == 1){
             Toast.makeText(this,"Player one wins ",Toast.LENGTH_LONG).show()
+            playerWinCount++
             var intNo = playerWin.text.toString().toInt()
-            intNo++
+            intNo = playerWinCount
             val str = intNo.toString()
             playerWin.text = SpannableStringBuilder(str)
             resetGame()
@@ -130,7 +131,11 @@ class MainActivity : AppCompatActivity() {
 
         }else if(winner ==2){
             Toast.makeText(this,"Player two wins ",Toast.LENGTH_LONG).show()
-            // computerWin.text
+            computerWinCount++
+            var intNo = computerWin.text.toString().toInt()
+            intNo = computerWinCount
+            var str = intNo.toString()
+            computerWin.text = SpannableStringBuilder(str)
             resetGame()
 
         }
@@ -164,9 +169,32 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    var playerWinCount = 0
+    var computerWinCount = 0
     fun resetGame(){
+        activePlayer = 1
         playerOne.clear()
         playerTwo.clear()
+        for(cellId in 1..9) {
+            var selectedbutton: Button?
+            selectedbutton = when (cellId) {
+                1 -> button1
+                2 -> button2
+                3 -> button3
+                4 -> button4
+                5 -> button5
+                6 -> button6
+                7 -> button7
+                8 -> button8
+                9 -> button9
+                else -> {
+                    button1
+                }
+            }
+            selectedbutton.text = ""
+            selectedbutton.setBackgroundResource(R.color.colorPrimaryDark)
+
+        }
 
     }
 }
