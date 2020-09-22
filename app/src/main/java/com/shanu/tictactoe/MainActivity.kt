@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             computerWinCount++
             var intNo = computerWin.text.toString().toInt()
             intNo = computerWinCount
-            var str = intNo.toString()
+            val str = intNo.toString()
             computerWin.text = SpannableStringBuilder(str)
             resetGame()
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun autoPlay(){
-        var emptyCell = arrayListOf<Int>()
+        val emptyCell = arrayListOf<Int>()
         for(cellId in 1..9){
             if(!(playerOne.contains(cellId) || playerTwo.contains(cellId))){
                 emptyCell.add(cellId)
