@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             selectedbutton.setTextColor(R.color.black)
             playerOne.add(cellId)
             activePlayer = 2
+            autoPlay()
 
 
         } else {
@@ -116,9 +120,39 @@ class MainActivity : AppCompatActivity() {
         if(winner == 1){
             Toast.makeText(this,"Player one wins ",Toast.LENGTH_LONG).show()
 
+
         }else if(winner ==2){
             Toast.makeText(this,"Player two wins ",Toast.LENGTH_LONG).show()
 
         }
+    }
+
+    fun autoPlay(){
+        var emptyCell = arrayListOf<Int>()
+        for(cellId in 1..9){
+            if(!(playerOne.contains(cellId) || playerTwo.contains(cellId))){
+                emptyCell.add(cellId)
+
+            }
+        }
+        var r = Random()
+        var randIndex = r.nextInt(emptyCell.size - 0) + 0
+        var cellId = emptyCell[randIndex]
+        var selectedbutton:Button?
+        selectedbutton = when(cellId){
+            1 -> button1
+            2 -> button2
+            3 -> button3
+            4 -> button4
+            5 -> button5
+            6 -> button6
+            7 -> button7
+            8 -> button8
+            9 -> button9
+            else -> {button1}
+        }
+        playGame(cellId,selectedbutton)
+
+
     }
 }
