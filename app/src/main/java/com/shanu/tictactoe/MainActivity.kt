@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    private var mAuth: FirebaseAuth? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        mAuth = FirebaseAuth.getInstance();
     }
 
     fun buttonClick(view: View) {
@@ -131,21 +130,12 @@ class MainActivity : AppCompatActivity() {
         // Final check
         if(winner == 1){
             Toast.makeText(this, "Player one wins ", Toast.LENGTH_LONG).show()
-            playerWinCount++
-            var intNo = playerWin.text.toString().toInt()
-            intNo = playerWinCount
-            val str = intNo.toString()
-            playerWin.text = SpannableStringBuilder(str)
+
             resetGame()
 
 
         }else if(winner ==2){
             Toast.makeText(this, "Player two wins ", Toast.LENGTH_LONG).show()
-            computerWinCount++
-            var intNo = computerWin.text.toString().toInt()
-            intNo = computerWinCount
-            val str = intNo.toString()
-            computerWin.text = SpannableStringBuilder(str)
             resetGame()
 
         }
@@ -179,8 +169,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    var playerWinCount = 0
-    var computerWinCount = 0
+
     fun resetGame(){
         activePlayer = 1
         playerOne.clear()
