@@ -10,30 +10,7 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
-
-        <EditText
-            android:id="@+id/playerWin"
-            android:layout_width="30pt"
-            android:layout_height="30pt"
-            android:ems="10"
-            android:hint="0"
-            android:inputType="number"
-            android:text="0"
-            android:textAlignment="center"
-            android:textSize="36sp" />
-
-        <EditText
-            android:id="@+id/computerWin"
-            android:layout_width="30pt"
-            android:layout_height="30pt"
-            android:ems="10"
-            android:hint="0"
-            android:inputType="number"
-            android:text="0"
-            android:textAlignment="center"
-            android:textSize="36sp" />
-    </TableRow>
+        android:gravity="center"/>
 
     <TableRow
         android:layout_width="match_parent"

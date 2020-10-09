@@ -1,21 +1,31 @@
 package com.shanu.tictactoe
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class MainActivity : AppCompatActivity() {
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    private var mAuth: FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        mAuth = FirebaseAuth.getInstance();
     }
 
     fun buttonClick(view: View) {
@@ -34,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             R.id.button9 -> cellId = 9
 
         }
-        playGame(cellId,selectedButton)
+        playGame(cellId, selectedButton)
 
 
     }
@@ -120,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
         // Final check
         if(winner == 1){
-            Toast.makeText(this,"Player one wins ",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Player one wins ", Toast.LENGTH_LONG).show()
             playerWinCount++
             var intNo = playerWin.text.toString().toInt()
             intNo = playerWinCount
@@ -130,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }else if(winner ==2){
-            Toast.makeText(this,"Player two wins ",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Player two wins ", Toast.LENGTH_LONG).show()
             computerWinCount++
             var intNo = computerWin.text.toString().toInt()
             intNo = computerWinCount
@@ -165,7 +175,7 @@ class MainActivity : AppCompatActivity() {
             9 -> button9
             else -> {button1}
         }
-        playGame(cellId,selectedbutton)
+        playGame(cellId, selectedbutton)
 
 
     }
