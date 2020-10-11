@@ -1,10 +1,12 @@
 package com.shanu.tictactoe
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login2.*
 
 class LoginActivity : AppCompatActivity() {
@@ -28,11 +30,31 @@ class LoginActivity : AppCompatActivity() {
 
             if(task.isSuccessful){
                 Toast.makeText(applicationContext,"Login Success",Toast.LENGTH_SHORT).show()
+                loadMain()
             }else{
                 Toast.makeText(applicationContext,"Login Failed",Toast.LENGTH_SHORT).show()
 
             }
         }
+
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadMain()
+        }
+    
+    fun loadMain(){
+        var currentUser = mAuth!!.currentUser
+        if(currentUser!=null) {
+            var intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("email", currentUser.email)
+            intent.putExtra("uid", currentUser.uid)
+            startActivity(intent)
+        }
+
 
     }
 }
