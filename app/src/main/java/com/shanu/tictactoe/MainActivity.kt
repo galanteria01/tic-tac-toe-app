@@ -196,4 +196,15 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    protected fun buRequestActivity(view:View){
+
+        var userEmail = etEmail.text
+
+    }
+
+    protected fun buAcceptActivity(view:View){
+        var userEmail = etEmail.text
+
+
+    }
 }
