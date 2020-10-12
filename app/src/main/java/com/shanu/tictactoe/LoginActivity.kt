@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity() {
                 // Save details to database
                 if (currentUser != null) {
                     myRef.child("Users")
-                        .child(splitString(currentUser.email.toString())).setValue(currentUser.uid)
+                        .child(splitString(currentUser.email.toString()))
+                        .child("Request").setValue(currentUser.uid)
                 }
                 loadMain()
             }else{
