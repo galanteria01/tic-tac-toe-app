@@ -240,7 +240,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                         }
-                    }catch ()
+                    }catch (ex:Exception){ }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
