@@ -10,10 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -217,5 +221,36 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun takeCalls(){
+        myRef.child("Users").child(splitString(myEmail!!)).child("Request")
+            .addValueEventListener(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try{
+                        var td = snapshot.value as HashMap<String, Any>
+
+                        if(td!=null){
+                            var value:String
+                            for(key in td.keys){
+                                value = td[key] as String
+                                etEmail.setText(value)
+                                break
+
+                            }
+
+                        }
+                    }catch ()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+    }
+
+    fun splitString(str:String):String{
+        var split = str.split("@")
+        return split[0]
     }
 }
