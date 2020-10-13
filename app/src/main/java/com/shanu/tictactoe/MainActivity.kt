@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
     }
-
+    var number = 0
     fun takeCalls(){
         myRef.child("Users").child(splitString(myEmail!!)).child("Request")
             .addValueEventListener(object:ValueEventListener{
@@ -254,6 +254,11 @@ class MainActivity : AppCompatActivity() {
                             for(key in td.keys){
                                 value = td[key] as String
                                 etEmail.setText(value)
+                                val notifyMe = Notification()
+                                notifyMe.notify(applicationContext
+                                    ,value + "wants to play with you",number)
+                                number++
+
                                 myRef.child("Users")
                                     .child(splitString(myEmail!!))
                                     .child("Request").setValue(true)
