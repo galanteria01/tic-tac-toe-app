@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     var myEmail:String?=null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -36,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         var bundle:Bundle = intent.extras!!
         myEmail = bundle.getString("email")
+        takeCalls()
     }
 
     fun buttonClick(view: View) {
@@ -54,9 +54,8 @@ class MainActivity : AppCompatActivity() {
             R.id.button9 -> cellId = 9
 
         }
-        playGame(cellId, selectedButton)
-
-
+        myRef.child("PlayerOnline").child("sessionID").child(cellId.toString())
+            .setValue(myEmail)
     }
 
     var activePlayer = 1
@@ -71,16 +70,12 @@ class MainActivity : AppCompatActivity() {
             selectedbutton.setTextColor(R.color.black)
             playerOne.add(cellId)
             activePlayer = 2
-            autoPlay()
-
-
         } else {
             selectedbutton.text = "O"
             selectedbutton.setBackgroundResource(R.color.white)
             selectedbutton.setTextColor(R.color.black)
             playerTwo.add(cellId)
             activePlayer = 1
-
         }
         checkWinner()
 
@@ -152,17 +147,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun autoPlay(){
-        val emptyCell = arrayListOf<Int>()
-        for(cellId in 1..9){
-            if(!(playerOne.contains(cellId) || playerTwo.contains(cellId))){
-                emptyCell.add(cellId)
+    fun autoPlay(cellId: Int){
 
-            }
-        }
-        val r = Random()
-        val randIndex = r.nextInt(emptyCell.size - 0) + 0
-        val cellId = emptyCell[randIndex]
         val selectedbutton:Button?
         selectedbutton = when(cellId){
             1 -> button1
@@ -177,8 +163,6 @@ class MainActivity : AppCompatActivity() {
             else -> {button1}
         }
         playGame(cellId, selectedbutton)
-
-
     }
 
     fun resetGame(){
@@ -203,16 +187,15 @@ class MainActivity : AppCompatActivity() {
             }
             selectedbutton.text = ""
             selectedbutton.setBackgroundResource(R.color.colorPrimaryDark)
-
         }
-
     }
     protected fun buRequestActivity(view:View){
 
         var userEmail = etEmail.text.toString()
         myRef.child("Users").child(splitString(userEmail))
             .child("Request").push().setValue(myEmail)
-
+        playerOnline(splitString(myEmail!!) + splitString(userEmail))
+        playerSymbol = "X"
     }
 
     protected fun buAcceptActivity(view:View){
@@ -220,9 +203,43 @@ class MainActivity : AppCompatActivity() {
         myRef.child("Users").child(splitString(myEmail!!))
             .child("Request").push().setValue(userEmail)
 
+        playerOnline(splitString(userEmail) + splitString(myEmail!!))
+        playerSymbol = "O"
+    }
 
+    var sessionID:String?=null
+    var playerSymbol:String?=null
+    fun playerOnline(sessionID:String){
+        this.sessionID = sessionID
+        myRef.child("PlayerOnline").removeValue()
+        myRef.child("PlayerOnline").child(sessionID)
+            .addValueEventListener(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try{
+                        playerOne.clear()
+                        playerTwo.clear()
+                        var td = snapshot.value as HashMap<String, Any>
 
+                        if(td!=null){
+                            var value:String
+                            for(key in td.keys){
+                                value = td[key] as String
+                                if(value!=myEmail){
+                                    activePlayer = if(playerSymbol === "X") 1 else 2
 
+                                }else{
+                                    activePlayer = if(playerSymbol === "X") 2 else 1
+                                }
+                                autoPlay(key.toInt())
+                            }
+                        }
+                    }catch (ex:Exception){ }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
     }
 
     fun takeCalls(){
