@@ -210,13 +210,15 @@ class MainActivity : AppCompatActivity() {
     protected fun buRequestActivity(view:View){
 
         var userEmail = etEmail.text.toString()
-        myRef.child("Users").child(userEmail)
+        myRef.child("Users").child(splitString(userEmail))
             .child("Request").push().setValue(myEmail)
 
     }
 
     protected fun buAcceptActivity(view:View){
         var userEmail = etEmail.text.toString()
+        myRef.child("Users").child(splitString(myEmail!!))
+            .child("Request").push().setValue(userEmail)
 
 
 
@@ -235,6 +237,9 @@ class MainActivity : AppCompatActivity() {
                             for(key in td.keys){
                                 value = td[key] as String
                                 etEmail.setText(value)
+                                myRef.child("Users")
+                                    .child(splitString(myEmail!!))
+                                    .child("Request").setValue(true)
                                 break
 
                             }
